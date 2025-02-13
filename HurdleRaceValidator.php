@@ -17,8 +17,15 @@ class HurdleRaceValidator {
         $this->runnerRace = $runnerRace;
     }
 
-    public function validateRace(): boolean {
-
+    public function validateRace(): bool {
+        $result = $this->track;
+        for($i = 0; $i < count($this->runnerRace); ++$i) {
+            //TODO: Private aux methods for that ifs
+            if($this->track[$i] == self::FLOOR && $this->runnerRace[$i] == "jump") $result[$i] = self::WRONG_JUMP;
+            else if($this->track[$i] == self::HURDLE && $this->runnerRace[$i] == "run") $result[$i] = self::FALLEN_HURDLE;
+        }
+        echo $result;
+        return false;
     }
 
     private function printRaceResult(string $result): void {
