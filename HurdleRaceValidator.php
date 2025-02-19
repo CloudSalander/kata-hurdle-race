@@ -17,21 +17,30 @@ class HurdleRaceValidator {
         $this->runnerRace = $runnerRace;
     }
 
-    public function validateRace(): bool {
+    public function validateRaceAndPrintResult(): bool {
         $result = $this->track;
         for($i = 0; $i < count($this->runnerRace); ++$i) {
-            //TODO: Private aux methods for that ifs
-            if($this->track[$i] == self::FLOOR && $this->runnerRace[$i] == "jump") $result[$i] = self::WRONG_JUMP;
-            else if($this->track[$i] == self::HURDLE && $this->runnerRace[$i] == "run") $result[$i] = self::FALLEN_HURDLE;
+            if($this->isWrongJump($i)) $result[$i] = self::WRONG_JUMP;
+            if($this->isHittingHurdle($i)) $result[$i] = self::FALLEN_HURDLE;
         }
         echo $result;
-        if(in_array(self::FALLEN_HURDLE, str_split($result)) || in_array(self::WRONG_JUMP,str_split($result))) return false;
+        if($this->isRightRace($result)) return false;
         return true;
     }
 
-    private function printRaceResult(string $result): void {
-
+    private function isWrongJump(int $step): bool {
+        return $this->track[$step] == self::FLOOR && $this->runnerRace[$step] == "jump";
     }
+
+    private function isHittingHurdle(int $step): bool {
+        return $this->track[$step] == self::HURDLE && $this->runnerRace[$step] == "run";
+    }
+
+    private function isRightRace(string $result): bool {
+        return in_array(self::FALLEN_HURDLE, str_split($result)) 
+            || in_array(self::WRONG_JUMP,str_split($result));
+    }
+
 }
 
 ?>
