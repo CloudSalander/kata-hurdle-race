@@ -25,7 +25,8 @@ class HurdleRaceValidator {
             else if($this->track[$i] == self::HURDLE && $this->runnerRace[$i] == "run") $result[$i] = self::FALLEN_HURDLE;
         }
         echo $result;
-        return false;
+        if(in_array(self::FALLEN_HURDLE, str_split($result)) || in_array(self::WRONG_JUMP,str_split($result))) return false;
+        return true;
     }
 
     private function printRaceResult(string $result): void {
